@@ -1,0 +1,14 @@
+[
+  {
+    "name": "TEST",
+    "ext": "test",
+    "mime": "text/test",
+    "blocks": [
+      {
+        "name": "test file",
+        "offset": 0,
+        "bytes": "74657374"
+      }
+    ]
+  }
+]
