@@ -1,6 +1,6 @@
 package lib.gintec_rdl.spector;
 
-import org.apache.log4j.BasicConfigurator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -13,9 +13,6 @@ public class SpectorTest {
     @Before
     public void setupLogging() {
         logger = LoggerFactory.getLogger(SpectorTest.class);
-
-        // Setup simple logging
-        BasicConfigurator.configure();
 
         // load from resource
         Spector.addProviders(new ResourceFileSignatureProvider("spector-test-file-signature.json"));
