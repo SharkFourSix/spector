@@ -25,10 +25,57 @@ Spector - Lightweight and extensible file content type detection library.
 
 ##### Maven
 
+Add JitPack to include the core API dependency
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+Then
+
 ```xml
 <dependency>
     <groupId>lib.gintec_rdl</groupId>
     <artifactId>spector</artifactId>
+    <version>{{ version }}</version>
+</dependency>
+```
+
+The core API library does not come with any signatures only
+    the API. You can include a number of different file signature 
+    providers as you see fit.
+    
+There are currently two other related provider libraries that I will 
+    be adding more signatures to:
+    
+- [https://github.com/SharkFourSix/spector-document-file-signatures](https://github.com/SharkFourSix/spector-document-file-signatures)
+- [https://github.com/SharkFourSix/spector-image-file-signatures](https://github.com/SharkFourSix/spector-image-file-signatures) 
+
+###### Image File Signatures
+
+Include this library for detecting image files
+
+```xml
+<dependency>
+    <groupId>lib.gintec_rdl.spector</groupId>
+    <artifactId>image-file-signatures</artifactId>
+    <version>{{ version }}</version>
+</dependency>
+```
+
+###### Document File Signatures 
+
+Include this library for detecting document files
+
+```xml
+<dependency>
+    <groupId>lib.gintec_rdl.spector</groupId>
+    <artifactId>document-file-signatures</artifactId>
     <version>{{ version }}</version>
 </dependency>
 ```
