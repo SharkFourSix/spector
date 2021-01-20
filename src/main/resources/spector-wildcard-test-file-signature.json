@@ -1,0 +1,14 @@
+[
+  {
+    "name": "WILDCARD TEST",
+    "ext": "test",
+    "mime": "text/test",
+    "blocks": [
+      {
+        "name": "wildcard test file",
+        "offset": 0,
+        "bytes": "74?573?4"
+      }
+    ]
+  }
+]

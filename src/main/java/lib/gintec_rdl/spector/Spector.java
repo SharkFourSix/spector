@@ -88,22 +88,22 @@ public final class Spector {
 
         if (signaturesLoaded.compareAndSet(false, true)) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Loading signatures from {} providers", new Object[]{providers.size()});
+                LOG.info("Loading signatures from {} providers", providers.size());
             }
             if (!providers.isEmpty()) {
                 for (FileSignatureProvider provider : providers.values()) {
                     if (LOG.isInfoEnabled()) {
-                        LOG.info("Loading file signatures from {}", new Object[]{provider.getName()});
+                        LOG.info("Loading file signatures from {}", provider.getName());
                     }
                     List<FileSignature> signatureList = provider.getSignatures();
                     if (LOG.isInfoEnabled()) {
-                        LOG.info("Loaded {} file signatures from {}", new Object[]{signatureList.size(), provider.getName()});
+                        LOG.info("Loaded {} file signatures from {}", signatureList.size(), provider.getName());
                     }
                     this.fileSignatures.addAll(signatureList);
                 }
             }
             if (LOG.isInfoEnabled()) {
-                LOG.info("Loaded {} file signatures in total", new Object[]{this.fileSignatures.size()});
+                LOG.info("Loaded {} file signatures in total", this.fileSignatures.size());
             }
         }
     }

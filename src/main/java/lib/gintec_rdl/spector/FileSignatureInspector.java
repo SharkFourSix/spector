@@ -131,8 +131,8 @@ final class FileSignatureInspector implements FileInspector {
 
     private boolean blockMatches(HexStringIterator iterator, byte[] buf) {
         int index = 0;
-        for (int _byte : iterator) {
-            if (_byte != (buf[index] & 0xff)) {
+        for (HexStringIterator.ByteValue byteValue : iterator) {
+            if (!byteValue.matches(buf[index])) {
                 return false;
             }
             index++;

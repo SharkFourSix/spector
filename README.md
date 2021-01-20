@@ -181,22 +181,28 @@ If the _seek_ property is not defined, the default value is `Begin`,
     
 Spector uses SLF4J so configure as required
 
-# Goals
+##### Wildcard Specifier
 
-- Allow specifying wildcard bytes. The rationale being that the same 
-    sequence can match multiple versions of a file type, instead of 
-    having one signature per file type.
-    
-##### Example
+In cases where the need to skip certain bytes arises, a wildcard `?` can be specified instead. 
+Wildcards will match any encountered value, effectively skipping that value.
 
-Take for instance `DEADBEEF` and `DEADDEEF`. If the combined 
-    LSB and MSB nibbles of the octets at offset 1 and 2 (`BE` and `AD`) 
-    were dependent upon the version of the file type and that
-    all we wanted to do was determine the type of the file, we could 
-    come up with the following signature: `DEA??EEF`.
-    
-    
-Inspection would have to be done at the bit level for uneven wildcard 
-    sequences, such as the one above. For even wildcard sequences 
-    where the whole octet were marked, a simple offset matching would 
-    have to suffice. 
+`??` will match a whole octet and a single `?` will only match one half of the octet, depending on the specified position.
+For instance, `1?` will match any byte value within the range of `10` - `1F`. Likewise `?1` will match values 
+in range `01 - F1`.
+
+Putting it all together, a signature  with wildcard might look like this:
+
+```json
+{
+  "name": "PNG",
+  "ext": "png",
+  "mime": "image/png",
+  "blocks": [
+    {
+      "name": "PNG Header",
+      "offset": 0,
+      "bytes": "89504e4??d0a1a0?"
+    }
+  ]
+}
+```

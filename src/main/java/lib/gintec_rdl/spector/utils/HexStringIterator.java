@@ -8,7 +8,7 @@ import java.util.Iterator;
  * <p>The class is re-usable and can be reset by calling {@link #setHexString(String)}. However it is not
  * thread safe and callers should exercise caution when using the class in multithreaded environments.</p>
  */
-public class HexStringIterator implements Iterator<Integer>, Iterable<Integer> {
+public class HexStringIterator implements Iterator<HexStringIterator.ByteValue>, Iterable<HexStringIterator.ByteValue> {
     private String hex;
     private int length;
     private int offset;
@@ -31,10 +31,10 @@ public class HexStringIterator implements Iterator<Integer>, Iterable<Integer> {
         return offset < length;
     }
 
-    public Integer next() {
+    public ByteValue next() {
         final char[] chars = {getHexCharAt(offset), getHexCharAt(offset + 1)};
         offset += 2;
-        return atodec(chars);
+        return new ByteValue(chars, this);
     }
 
     public void remove() {
@@ -43,10 +43,12 @@ public class HexStringIterator implements Iterator<Integer>, Iterable<Integer> {
 
     private char getHexCharAt(int index) {
         char c = hex.charAt(index);
-        if (LocaleUtils.numberInclusivelyInRange(c, '0', '9') || LocaleUtils.numberInclusivelyInRange(c, 'A', 'F')) {
+        if (c == '?' || LocaleUtils.numberInclusivelyInRange(c, '0', '9')
+                || LocaleUtils.numberInclusivelyInRange(c, 'A', 'F')) {
             return c;
         }
-        throw new IllegalArgumentException("Invalid hex character '" + c + "' at index " + index);
+        throw new IllegalArgumentException("Invalid hex character '" + c + "' at index " + index
+                + ". Only hex digits and wildcard (?) specifiers are allowed.");
     }
 
     private int atodec(char[] chars) {
@@ -57,7 +59,49 @@ public class HexStringIterator implements Iterator<Integer>, Iterable<Integer> {
         return c >= 'A' ? c - 'A' + 10 : c - '0';
     }
 
-    public Iterator<Integer> iterator() {
+    public Iterator<ByteValue> iterator() {
         return this;
+    }
+
+    public static class ByteValue {
+        private Byte low;
+        private Byte high;
+        private final Byte octet;
+        private final boolean wildcard;
+
+        ByteValue(char[] chars, HexStringIterator hsi) {
+            wildcard = chars[0] == '?' || chars[1] == '?';
+            if (wildcard) {
+                octet = null;
+                if (chars[0] != '?') {
+                    low = (byte) ((hsi.atoi(chars[0]) & 0xff));
+                }
+                if (chars[1] != '?') {
+                    high = (byte) ((hsi.atoi(chars[1]) & 0xff));
+                }
+            } else {
+                octet = (byte) (hsi.atodec(chars) & 0xff);
+                low = high = null;
+            }
+        }
+
+        public boolean matches(byte input) {
+            int value = input & 0xff;
+            if (wildcard) {
+                int _low = (value & 0xf0) >> 1;
+                int _high = (value & 0x0f);
+
+                // Both low and high are optional
+                if (low == null && high == null) {
+                    return true;
+                } else if (low != null) {
+                    return low.intValue() == _low;
+                } else {
+                    return high.intValue() == _high;
+                }
+            } else {
+                return octet.intValue() == value;
+            }
+        }
     }
 }

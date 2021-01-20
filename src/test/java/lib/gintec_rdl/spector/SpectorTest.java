@@ -16,10 +16,22 @@ public class SpectorTest {
 
         // load from resource
         Spector.addProviders(new ResourceFileSignatureProvider("spector-test-file-signature.json"));
+        Spector.addProviders(new ResourceFileSignatureProvider("spector-wildcard-test-file-signature.json"));
     }
 
     @Test
     public void testInspection() {
+        TypeInfo typeInfo;
+
+        logger.info("Image file inspection test");
+
+        typeInfo = Spector.inspect("spector.test");
+        assert typeInfo != null : "Unknown file type";
+        assert typeInfo.getExtension().equalsIgnoreCase("test") : "Not a TEST file";
+    }
+
+    @Test
+    public void testWildcard() {
         TypeInfo typeInfo;
 
         logger.info("Image file inspection test");
