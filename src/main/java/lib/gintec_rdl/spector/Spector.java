@@ -5,15 +5,23 @@ import lib.gintec_rdl.spector.utils.GetValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class Spector {
     private static final Logger LOG = LoggerFactory.getLogger(Spector.class);
-    private static final Spector instance = new Spector();
+    private static final Spector instance;
     static final Gson GSON = new Gson();
+
+    static {
+        instance = new Spector();
+        addProviders(
+                new ResourceFileSignatureProvider("spector/signatures/images/image-signatures.json", "Image File Signatures"),
+                new ResourceFileSignatureProvider("spector/signatures/documents/document-signatures.json", "Document File Signatures")
+        );
+    }
 
     private final AtomicBoolean signaturesLoaded;
     private final AtomicBoolean providersLoaded;
@@ -22,7 +30,7 @@ public final class Spector {
     private final ConcurrentHashMap<String, FileSignatureProvider> providers;
 
     private boolean autoLoadProviders() {
-        return Boolean.valueOf(System.getProperty("spector.autoloadProviders", "false"));
+        return Boolean.parseBoolean(System.getProperty("spector.autoloadProviders", "false"));
     }
 
     private Spector() {

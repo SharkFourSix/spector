@@ -15,15 +15,24 @@ import java.util.List;
  */
 public final class ResourceFileSignatureProvider extends FileSignatureProviderImpl {
     private boolean loaded;
+    private String providerName;
     private final String directory;
     private List<FileSignature> fileSignatures;
 
-    public ResourceFileSignatureProvider(String directory) {
+    public ResourceFileSignatureProvider(String signatureFile) {
+        this(signatureFile, null);
+    }
+
+    public ResourceFileSignatureProvider(String directory, String customProviderName) {
         this.directory = GetValue.of(directory).notNull("directory");
+        this.providerName = "Resource File Signature Provider";
+        if (customProviderName != null && !customProviderName.isEmpty()) {
+            this.providerName = this.providerName + "[" + customProviderName + "]";
+        }
     }
 
     public String getName() {
-        return "Resource File Signature Provider";
+        return providerName;
     }
 
     public List<FileSignature> getSignatures() {
@@ -38,15 +47,13 @@ public final class ResourceFileSignatureProvider extends FileSignatureProviderIm
                 fileSignatures = Collections.unmodifiableList(Arrays.asList(signatureArray));
                 loaded = true;
             } catch (Exception e) {
-                getLogger().error("Error loading file signatures from resource path {}",
-                        new Object[]{directory, e});
+                getLogger().error("Error loading file signatures from resource path {}", directory, e);
             } finally {
                 if (reader != null) {
                     try {
                         reader.close();
                     } catch (Exception e) {
-                        getLogger().warn("Error closing resource handle when loading signatures from {}",
-                                new Object[]{directory, e});
+                        getLogger().warn("Error closing resource handle when loading signatures from {}", directory, e);
                     }
                 }
             }

@@ -4,7 +4,7 @@ Spector - Lightweight and extensible file content type detection library.
 
 # Why
 
-- Because most file detectors in Java (looking at you Tika) are too heavy 
+- Because most file detectors in Java are too heavy 
     and you end up with very obese uber JARs, a polluted classpath 
     and dependency tree.
 
@@ -40,45 +40,23 @@ Then
 
 ```xml
 <dependency>
-    <groupId>lib.gintec_rdl</groupId>
+    <groupId>com.github.SharkFourSix</groupId>
     <artifactId>spector</artifactId>
     <version>{{ version }}</version>
 </dependency>
 ```
 
-The core API library does not come with any signatures only
-    the API. You can include a number of different file signature 
-    providers as you see fit.
-    
-There are currently two other related provider libraries that I will 
-    be adding more signatures to:
-    
-- [https://github.com/SharkFourSix/spector-document-file-signatures](https://github.com/SharkFourSix/spector-document-file-signatures)
-- [https://github.com/SharkFourSix/spector-image-file-signatures](https://github.com/SharkFourSix/spector-image-file-signatures) 
+Currently, the following are supported:
 
 ###### Image File Signatures
 
-Include this library for detecting image files
-
-```xml
-<dependency>
-    <groupId>lib.gintec_rdl.spector</groupId>
-    <artifactId>image-file-signatures</artifactId>
-    <version>{{ version }}</version>
-</dependency>
-```
+- PNG
+- GIF/Animated GIF
+- JPEG
 
 ###### Document File Signatures 
 
-Include this library for detecting document files
-
-```xml
-<dependency>
-    <groupId>lib.gintec_rdl.spector</groupId>
-    <artifactId>document-file-signatures</artifactId>
-    <version>{{ version }}</version>
-</dependency>
-```
+- PDF
 
 ##### Usage
 
@@ -206,3 +184,15 @@ Putting it all together, a signature  with wildcard might look like this:
   ]
 }
 ```
+
+# TODO
+
+- [ ] Add document file signatures.
+- [ ] Add more image file signatures
+- [ ] Create Spring Boot Starter library
+
+# Changelog
+
+- v1.2.0 | **Aug 19 2020**
+  - Fixed bug in block matching method.
+  - Added image and PDF signatures.

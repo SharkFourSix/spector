@@ -1,0 +1,40 @@
+[
+  {
+    "name": "PDF-LF",
+    "ext": "pdf",
+    "mime": "application/pdf",
+    "blocks": [
+      {
+        "name": "PDF Document Header",
+        "offset": 0,
+        "bytes": "255044462D312E",
+        "seek": "Begin"
+      },
+      {
+        "name": "PDF Document EOF-LF",
+        "offset": 6,
+        "bytes": "2525454F460A",
+        "seek": "End"
+      }
+    ]
+  },
+  {
+    "name": "PDF-CRLF",
+    "ext": "pdf",
+    "mime": "application/pdf",
+    "blocks": [
+      {
+        "name": "PDF Document Header",
+        "offset": 0,
+        "bytes": "255044462D312E",
+        "seek": "Begin"
+      },
+      {
+        "name": "PDF Document EOF-CRLF",
+        "offset": 7,
+        "bytes": "2525454F460D0A",
+        "seek": "End"
+      }
+    ]
+  }
+]

@@ -40,4 +40,14 @@ public class SpectorTest {
         assert typeInfo != null : "Unknown file type";
         assert typeInfo.getExtension().equalsIgnoreCase("test") : "Not a TEST file";
     }
+
+    @Test
+    public void testImageFile() {
+        TypeInfo typeInfo;
+
+        logger.info("PNG file test");
+        typeInfo = Spector.inspect("spector.png");
+        assert typeInfo != null : "Unknown file type";
+        assert typeInfo.getExtension().equalsIgnoreCase("png") : "Not a PNG file";
+    }
 }

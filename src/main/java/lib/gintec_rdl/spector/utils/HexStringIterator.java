@@ -86,10 +86,9 @@ public class HexStringIterator implements Iterator<HexStringIterator.ByteValue>,
         }
 
         public boolean matches(byte input) {
-            int value = input & 0xff;
             if (wildcard) {
-                int _low = (value & 0xf0) >> 1;
-                int _high = (value & 0x0f);
+                int _low = (input & 0xf0) >> 1;
+                int _high = (input & 0x0f);
 
                 // Both low and high are optional
                 if (low == null && high == null) {
@@ -100,8 +99,18 @@ public class HexStringIterator implements Iterator<HexStringIterator.ByteValue>,
                     return high.intValue() == _high;
                 }
             } else {
-                return octet.intValue() == value;
+                return octet.intValue() == input;
             }
+        }
+
+        @Override
+        public String toString() {
+            return "ByteValue{" +
+                    "low=" + low +
+                    ", high=" + high +
+                    ", octet=" + octet +
+                    ", wildcard=" + wildcard +
+                    '}';
         }
     }
 }

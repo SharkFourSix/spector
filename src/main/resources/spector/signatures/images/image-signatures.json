@@ -1,0 +1,70 @@
+[
+  {
+    "name": "PNG",
+    "ext": "png",
+    "mime": "image/png",
+    "blocks": [
+      {
+        "name": "PNG Header",
+        "offset": 0,
+        "bytes": "89504e470d0a1a0a"
+      }
+    ]
+  },
+  {
+    "name": "JPEG",
+    "ext": "jpg",
+    "mime": "image/jpeg",
+    "blocks": [
+      {
+        "name": "JPEG Header",
+        "offset": 0,
+        "bytes": "FFD8FF"
+      },
+      {
+        "offset": 2,
+        "name": "JPEG Trailer",
+        "seek": "End",
+        "bytes": "FFD9"
+      }
+    ]
+  },
+  {
+    "name": "GIF89a",
+    "ext": "gif",
+    "mime": "image/gif",
+    "blocks": [
+      {
+        "name": "GIF89a Header",
+        "offset": 0,
+        "bytes": "474946383961",
+        "seek": "Begin"
+      },
+      {
+        "name": "GIF Trailer",
+        "offset": 1,
+        "bytes": "3B",
+        "seek": "End"
+      }
+    ]
+  },
+  {
+    "name": "GIF87a",
+    "ext": "gif",
+    "mime": "image/gif",
+    "blocks": [
+      {
+        "name": "GIF87a Header",
+        "offset": 0,
+        "bytes": "474946383761",
+        "seek": "Begin"
+      },
+      {
+        "name": "GIF Trailer",
+        "offset": 1,
+        "bytes": "3B",
+        "seek": "End"
+      }
+    ]
+  }
+]
